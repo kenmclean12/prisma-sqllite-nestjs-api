@@ -14,10 +14,22 @@ datasource db {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  email     String  @unique
-  firstName String
-  lastName  String
-  avatarUrl String?
+  id          Int     @id @default(autoincrement())
+  email       String  @unique
+  firstName   String
+  lastName    String
+  avatarUrl   String?
+  createdAt   DateTime @default(now())
+
+  properties  Property[]
+}
+
+model Property {
+  id        Int      @id @default(autoincrement())
+  name      String
+  location  String
+  ownerId   Int
+  owner     User     @relation(fields: [ownerId], references: [id])
   createdAt DateTime @default(now())
 }
+
