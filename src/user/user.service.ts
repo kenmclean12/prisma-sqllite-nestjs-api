@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
@@ -8,28 +7,27 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { User } from '@prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
-import { UserCreateDto, UserUpdateDto } from './dto';
+import { UserCreateDto, UserResponseDto, UserUpdateDto } from './dto';
 
 @Injectable()
 export class UserService {
   constructor(private prisma: PrismaService) {}
 
-  async findOne(id: number): Promise<User> {
+  async findOne(id: number): Promise<UserResponseDto> {
     const user = await this.prisma.user.findUnique({ where: { id } });
     if (!user) {
       throw new NotFoundException(`No user found w/ provided ID: ${id}`);
     }
 
-    return user;
+    return user as UserResponseDto;
   }
 
-  async findAll(): Promise<User[]> {
-    return await this.prisma.user.findMany();
+  async findAll(): Promise<UserResponseDto[]> {
+    return (await this.prisma.user.findMany()) as UserResponseDto[];
   }
 
-  async create(dto: UserCreateDto): Promise<User> {
+  async create(dto: UserCreateDto): Promise<UserResponseDto> {
     const existingUser = await this.prisma.user.findUnique({
       where: { email: dto.email },
     });
@@ -47,10 +45,10 @@ export class UserService {
       );
     }
 
-    return created;
+    return created as UserResponseDto;
   }
 
-  async update(id: number, dto: UserUpdateDto): Promise<User> {
+  async update(id: number, dto: UserUpdateDto): Promise<UserResponseDto> {
     const existingUser = await this.prisma.user.findUnique({ where: { id } });
     if (!existingUser) {
       throw new NotFoundException(`No user found with the provided ID: ${id}`);
@@ -67,10 +65,10 @@ export class UserService {
       );
     }
 
-    return updated;
+    return updated as UserResponseDto;
   }
 
-  async remove(id: number): Promise<User> {
+  async remove(id: number): Promise<UserResponseDto> {
     const existingUser = await this.prisma.user.findUnique({ where: { id } });
     if (!existingUser) {
       throw new NotFoundException(
@@ -79,6 +77,6 @@ export class UserService {
     }
 
     await this.prisma.user.delete({ where: { id } });
-    return existingUser;
+    return existingUser as UserResponseDto;
   }
 }
