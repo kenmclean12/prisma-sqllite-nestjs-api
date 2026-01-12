@@ -31,6 +31,7 @@ model Property {
   ownerId     Int
   owner       User      @relation(fields: [ownerId], references: [id])
   address     Address?
+  services    Service[]
   createdAt DateTime @default(now())
 }
 
@@ -45,3 +46,12 @@ model Address {
   property   Property? @relation(fields: [propertyId], references: [id])
 }
 
+model Service {
+  id          Int       @id @default(autoincrement())
+  name        String
+  description String?
+  price       Float
+  propertyId  Int      
+  property    Property  @relation(fields: [propertyId], references: [id])
+  createdAt   DateTime  @default(now())
+}

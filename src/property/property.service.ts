@@ -37,18 +37,10 @@ export class PropertyService {
   }
 
   async findByUserId(id: number): Promise<PropertyResponseDto[]> {
-    const properties = await this.prisma.property.findMany({
+    return (await this.prisma.property.findMany({
       where: { ownerId: id },
       include: { owner: true, address: true },
-    });
-
-    if (!properties) {
-      throw new NotFoundException(
-        `No property found with the provided ID: ${id}`,
-      );
-    }
-
-    return properties as PropertyResponseDto[];
+    })) as PropertyResponseDto[];
   }
 
   async create(dto: PropertyCreateDto): Promise<PropertyResponseDto> {
