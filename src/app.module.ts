@@ -6,6 +6,7 @@ import { PropertyModule } from './property/property.module';
 import { AddressModule } from './address/address.module';
 import { UserModule } from './user/user.module';
 import { ServiceModule } from './service/service.module';
+import { BookingModule } from './booking/booking.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { ServiceModule } from './service/service.module';
     AddressModule,
     UserModule,
     ServiceModule,
+    BookingModule,
   ],
   controllers: [AppController],
   providers: [AppService],
