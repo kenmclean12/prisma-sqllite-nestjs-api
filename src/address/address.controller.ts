@@ -16,9 +16,11 @@ import {
   ApiResponse,
   ApiParam,
   ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 
 @ApiTags('Address')
+@ApiBearerAuth('JWT')
 @Controller('address')
 export class AddressController {
   constructor(private readonly addressService: AddressService) {}

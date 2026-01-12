@@ -16,9 +16,11 @@ import {
   ApiResponse,
   ApiParam,
   ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 
 @ApiTags('Booking')
+@ApiBearerAuth('JWT')
 @Controller('booking')
 export class BookingController {
   constructor(private readonly bookingService: BookingService) {}

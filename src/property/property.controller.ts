@@ -20,9 +20,11 @@ import {
   ApiResponse,
   ApiParam,
   ApiBody,
+  ApiBearerAuth,
 } from '@nestjs/swagger';
 
 @ApiTags('Property')
+@ApiBearerAuth('JWT')
 @Controller('property')
 export class PropertyController {
   constructor(private readonly propertyService: PropertyService) {}

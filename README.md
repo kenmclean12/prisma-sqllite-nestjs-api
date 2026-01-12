@@ -1,99 +1,86 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+/*
+#############################################################
+#                     COMPANY MANAGEMENT API               #
+#############################################################
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+A minimal backend API for managing users, properties, services,
+and bookings. Built with NestJS, Prisma, and SQLite.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+It includes authentication with JWT, guards for protected routes,
+and full CRUD operations for users, properties, services, and
+service bookings.
 
-## Description
+#############################################################
+# FEATURES
+#############################################################
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Users
+  - Create, update, delete, and retrieve users.
+  - JWT-based authentication (login/logout).
+  - Protected routes using JwtAuthGuard.
 
-## Project setup
+- Properties & Addresses
+  - Manage properties for users.
+  - Each property can have an optional address.
 
-```bash
-$ npm install
-```
+- Services
+  - Properties can offer multiple services.
+  - CRUD operations for services.
 
-## Compile and run the project
+- Bookings
+  - Users can book services.
+  - Track status (pending | confirmed | canceled).
 
-```bash
-# development
-$ npm run start
+- Authentication
+  - Login endpoint issues JWT tokens.
+  - Protect endpoints using JwtAuthGuard.
 
-# watch mode
-$ npm run start:dev
+#############################################################
+# TECH STACK
+#############################################################
 
-# production mode
-$ npm run start:prod
-```
+- NestJS - backend framework
+- Prisma - ORM for database access
+- SQLite - lightweight relational database
+- JWT - authentication and authorization
+- Swagger - auto-generated API documentation
 
-## Run tests
+#############################################################
+# GETTING STARTED
+#############################################################
 
-```bash
-# unit tests
-$ npm run test
+1. Clone the repo
+   git clone <repo-url>
+   cd company-management-api
 
-# e2e tests
-$ npm run test:e2e
+2. Install dependencies
+   npm install
 
-# test coverage
-$ npm run test:cov
-```
+3. Initialize Prisma & SQLite
+   npx prisma generate
+   npx prisma migrate dev --name init
 
-## Deployment
+4. Set environment variables
+   Create a .env file:
+   
+   DATABASE_URL="file:./dev.db"
+   JWT_SECRET="your-super-secret-key"
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+5. Run the API
+   npm run start:dev
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+6. Open Swagger Docs
+   Visit http://localhost:3000/api to see and test all routes.
 
-```bash
-$ npm install -g @nestjs/mau
-$ mau deploy
-```
+#############################################################
+# API OVERVIEW
+#############################################################
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+- /auth/login      - login and get JWT token
+- /users           - manage users
+- /properties      - manage properties and addresses
+- /services        - manage services for properties
+- /bookings        - create and manage bookings for services
 
-## Resources
+> All protected routes require an Authorization: Bearer <token> header.
 
-Check out a few resources that may come in handy when working with NestJS:
-
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
-# prisma-sqllite-nestjs-api
